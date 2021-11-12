@@ -1,0 +1,23 @@
+[
+    {
+        "cardID": "******7890",
+        "name": "Coles Rewards MasterCard",
+        "image": "assets/image/01.jpg",
+        "available": 35000,
+        "limit": 44400
+    },
+    {
+        "cardID": "******7891",
+        "name": "Coles Rewards MasterCard1",
+        "image": "assets/image/02.jpg",
+        "available": 45000,
+        "limit": 244009
+    },
+    {
+        "cardID": "******7892",
+        "name": "Coles Rewards MasterCard2",
+        "image": "assets/image/03.jpg",
+        "available": 55000,
+        "limit": 344000
+    }
+]

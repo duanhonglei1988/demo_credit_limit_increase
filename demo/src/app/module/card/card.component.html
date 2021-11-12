@@ -1,0 +1,42 @@
+<div>
+    <div class="card_wrap">
+        <div class="card_image">
+          <img [src]="cardImage"/>
+        </div>
+        <div class="card_content">
+          <div>
+           <!--  <mat-select>
+              <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{food.viewValue}}
+              </mat-option>
+              </mat-select> -->
+              <select [ngModel]="cardValue" (ngModelChange)="cardValue=$event;isSelectCard()">
+                  <option *ngFor="let card of cards">{{card.name}}</option>
+              </select>
+          </div>
+          <div class="card_info">
+            <div>{{cardId}}</div>
+            <div class="blue_text">Manage Card</div>
+          </div>
+        </div>
+    </div>
+    <!-- progress -->
+    <div >
+        <span [innerHTML]='contentHtml'></span>
+    </div>
+    <!-- limit increase -->
+    <div class="limit_wrap">
+        <h2>Limit Increase</h2>
+        <div class="limit_info">
+            <span>Maximum Increase Amount</span>
+            <span class="blue_text">${{maxValue}}</span>
+        </div>
+        <div class="limit_info">
+            <span>Increase Limit To</span>
+            <input (ngModelChange)="inputNumber($event)" [ngModel]="limitValue" [value]="inputValue"/>
+        </div>
+        <div class="limit_info">
+            <button (click)="submit()">SUBMIT</button>
+        </div>
+    </div>
+</div>
