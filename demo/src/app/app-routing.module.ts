@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SuccessComponent } from './components/success/success.component';
-import { ErrorComponent } from './components/error/error.component';
+import { ErrorComponent } from './components/success/error.component';
 const routes: Routes = [
   {
     path:'',
