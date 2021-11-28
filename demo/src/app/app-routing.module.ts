@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SuccessComponent } from './components/success/success.component';
-
+import { ErrorComponent } from './components/error/error.component';
 const routes: Routes = [
   {
     path:'',
@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path:'success',
     component:SuccessComponent
+  },
+  {
+    path:'error',
+    component:ErrorComponent
   }
 /*   {
     path:'user',
