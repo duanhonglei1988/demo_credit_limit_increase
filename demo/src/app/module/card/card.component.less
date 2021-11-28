@@ -2,9 +2,11 @@
     display: flex;
     flex-direction: row;
     padding: 15px;
+    justify-content: center;
 }
 
 .card_content {
+    min-width:200px;
     display: flex;
     flex-direction: column;
     margin-left: 10px;
@@ -26,21 +28,46 @@
 }
 
 .limit_wrap {
+    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 150px;
     padding: 15px;
+    .limit_info_title {
+        text-align: left;
+        display: flex;
+        align-items: center;
+        .limit_info_title_text {
+            // font-size: 30px;
+        }
+    }
     .limit_info {
+        align-items: center;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         &:nth-last-child(1){
             justify-content: center;
         }
-    }   
+    }
+    .errorText {
+        color: red;
+    }
+    .submitButton {
+        justify-content: flex-end !important;
+        margin-top: 60px;
+    }
 }
 
 .blue_text {
-    color:aqua
+    color: #3f51b5;
+    display: flex;
+    span {
+        align-items: center;
+    }
+}
+
+.contentHtml {
+    text-align: center;
 }

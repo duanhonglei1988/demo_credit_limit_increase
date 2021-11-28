@@ -5,38 +5,38 @@
         </div>
         <div class="card_content">
           <div>
-           <!--  <mat-select>
-              <mat-option *ngFor="let food of foods" [value]="food.value">
-              {{food.viewValue}}
-              </mat-option>
-              </mat-select> -->
-              <select [ngModel]="cardValue" (ngModelChange)="cardValue=$event;isSelectCard()">
-                  <option *ngFor="let card of cards">{{card.name}}</option>
-              </select>
+                <mat-select [ngModel]="cardValue" (ngModelChange)="cardValue=$event;isSelectCard()">
+                  <mat-option *ngFor="let card of cards" [value]="card.name">
+                    {{card.name}}
+                  </mat-option>
+                </mat-select>
           </div>
           <div class="card_info">
             <div>{{cardId}}</div>
-            <div class="blue_text">Manage Card</div>
+            <div class="blue_text"><mat-icon aria-hidden="false" aria-label="Example settings icon">settings</mat-icon><span>Manage Card</span></div>
           </div>
         </div>
     </div>
     <!-- progress -->
-    <div >
+    <div class="contentHtml">
         <span [innerHTML]='contentHtml'></span>
     </div>
     <!-- limit increase -->
     <div class="limit_wrap">
-        <h2>Limit Increase</h2>
+        <h2 class="limit_info_title"><mat-icon aria-hidden="false" aria-label="Example pie_chart icon">pie_chart</mat-icon>&nbsp;<span class="limit_info_title_text">Limit Increase</span></h2>
         <div class="limit_info">
             <span>Maximum Increase Amount</span>
             <span class="blue_text">${{maxValue}}</span>
         </div>
         <div class="limit_info">
             <span>Increase Limit To</span>
-            <input (ngModelChange)="inputNumber($event)" [ngModel]="limitValue" [value]="inputValue"/>
+            <mat-form-field class="example-full-width"><input matInput (blur)="blurOut()" (ngModelChange)="inputNumber($event)" [ngModel]="limitValue" [value]="inputValue"/><mat-hint *ngIf="errorFlg" class="errorText">Please enter a number less than Maximum Increase Amount and more than Available Limit</mat-hint></mat-form-field>
+            
+            
         </div>
-        <div class="limit_info">
-            <button (click)="submit()">SUBMIT</button>
+        <div class="limit_info submitButton">
+            <!-- <button (click)="submit()">SUBMIT</button> -->
+            <button mat-raised-button color="primary" (click)="submit()">SUBMIT</button>
         </div>
     </div>
 </div>

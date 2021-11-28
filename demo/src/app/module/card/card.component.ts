@@ -24,17 +24,24 @@ export class CardComponent implements OnInit {
   limitValue:any = 0
   inputValue:number = 0
   ratio:number = 0
-
+  errorFlg:boolean = false
+  ratioTempNum:number = 0
   constructor(private http:HttpClient, private router: Router, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
    }
   ngOnInit(): void {
     this.http.get('../assets/mock/card.json').subscribe((res:any) => {
-      this.cards = res
-      let cardItem:any = this.cards[0]
-      this.setCardValue(cardItem)
+      if(res) {
+        this.cards = res
+        let cardItem:any = this.cards[0]
+        this.cardValue = cardItem.name
+        this.setCardValue(cardItem)
+        
+        this.ratio = cardItem.available
+        this.getD(this.ratio)
+      } else {
+        console.log('error')
+      }
       
-      this.ratio = cardItem.available
-      this.getD(this.ratio)
     })
   }
 
@@ -45,7 +52,7 @@ export class CardComponent implements OnInit {
 
   setCardValue(cardItem:any): void{
     this.cardImage = cardItem.image
-    this.cardId = cardItem.cardID
+    this.cardId = '********' + cardItem.cardID.substr(-4)
     this.maxValue = cardItem.limit
     this.getD(cardItem.available)
   }
@@ -54,33 +61,58 @@ export class CardComponent implements OnInit {
     e=e.replace(/,/g, "")
     this.limitValue = Number(e)
     this.cdr.detectChanges();
-    if(e <= this.maxValue){
-      
+    
+    // this.limitValue = this.formatPrice(this.limitValue)
+  }
+  blurOut() {
+    if(this.limitValue <= this.maxValue && this.limitValue > this.ratio){
+      this.errorFlg = false
     }else {
-      this.limitValue = this.maxValue
+      this.errorFlg = true
+      // this.limitValue = this.maxValue
     }
     this.limitValue = this.formatPrice(this.limitValue)
   }
-
   formatPrice(price:number): string {
     return String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   submit(): void {
-    const param = {
-      'id': this.cardId,
-      'limitValue':this.limitValue
-    }
-    this.router.navigate(['success'],{
-      queryParams: {
-        cardId: this.cardId,
-        limitValue:this.limitValue,
-        date: formatDate(new Date(), 'YYYY/MM/dd', 'en')
+    if(!this.errorFlg) {
+      const param = {
+        'id': this.cardId,
+        'limitValue':this.limitValue
       }
-    })
-    this.http.get('',{params: param}).subscribe((res:any) => {
-      this.router.navigateByUrl("success")
-    })
+      this.http.get('../assets/mock/response.json',{params: param}).subscribe((res:any) => {
+        if(res && res.result.status === "OK") {
+          this.http.get('../assets/mock/customer.json',{params: param}).subscribe((response:any) => {
+            if(response && response.result.status === "OK") {
+              this.router.navigate(['success'],{
+                queryParams: {
+                  cardId: this.cardId,
+                  limitValue:this.limitValue,
+                  date: formatDate(new Date(), 'YYYY/MM/dd', 'en')
+                }
+              })
+            } else {
+              console.log('error')
+            }
+          })
+        } else {
+          this.router.navigate(['error'],{
+            queryParams: {
+              cardId: this.cardId,
+              limitValue:this.limitValue,
+              date: formatDate(new Date(), 'YYYY/MM/dd', 'en')
+            }
+          })
+        }
+        
+      })
+    } else {
+      alert('Please write correct number')
+    }
+    
   }
 
   contentHtml: any = ''
@@ -90,6 +122,7 @@ export class CardComponent implements OnInit {
     if (ratioTemp >= 100) {
       ratio  = 99.99
     }
+    this.ratioTempNum = ratioTemp
     const angle = Math.PI / 50 * ratioTemp
     const r = 47
     const x = r * Math.cos(angle)
@@ -104,9 +137,9 @@ export class CardComponent implements OnInit {
       <tspan x="1" y="-10">Available Limit</tspan> 
     </text>
     <text text-anchor="middle" dominant-baseline="middle">
-      <tspan x="1" y="10">${ratio}</tspan> 
+      <tspan x="1" y="10" style="color: #336699;">$${ratio}</tspan> 
     </text>
-</svg>
+    </svg>
     `)
 
   }
