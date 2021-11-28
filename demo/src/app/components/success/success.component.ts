@@ -6,6 +6,9 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-success',
   template: `
   <div class="limit_wrap">
+  <div class="card_image">
+  <img src="../../../assets/image/success.png"/>
+  </div>
     <h2>Request Submit Successfully</h2>
     <div class="limit_info">
         <span>Transaction Card</span>
@@ -13,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
     </div>
     <div class="limit_info">
         <span>Increase Limit To</span>
-        <span class="blue_text">{{queryParams.limitValue}}</span>
+        <span class="blue_text">{{'$' + queryParams.limitValue}}</span>
     </div>
     <div class="limit_info">
         <span>Request Submit Date</span>
@@ -32,6 +35,7 @@ export class SuccessComponent implements OnInit{
   }
   ngOnInit() {  
     this.route.queryParams.subscribe((params:any) => {
+         console.log(params)
          this.queryParams = params
     })
      
